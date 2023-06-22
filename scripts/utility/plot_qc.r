@@ -13,6 +13,9 @@ PlotQC <- function(object.list, project.name='', outpath='', filter.doublets=TRU
         predicted_gmm_doublets=fifelse(doublet_scores < cutoff, 'singlet', 'doublet')
     )]
 
+    fwrite(x=m, file='output/unfiltered_metadata.csv')
+    
+
     object.list <- sapply(object.list, function(object) {
         object <- object %>% subset(
             cells=
@@ -44,10 +47,10 @@ PlotQC <- function(object.list, project.name='', outpath='', filter.doublets=TRU
     ggsave(plot=p, width=15, height=8, filename=paste0(outpath, 'qc_plot1.pdf'))
 
     
-    plot1 <- m %>% ggplot(aes(x=get(noise[2]), y=get(noise[4]))) + geom_point(alpha=0.3) + geom_smooth() + 
+    plot1 <- m %>% ggplot(aes(x=get(noise[2]), y=get(noise[4]))) + geom_point(alpha=0.3) 
         theme_bw() + xlab('Number of UMIs - RNA') + ylab('Number of Genes - RNA')
     
-    plot2 <- m %>% ggplot(aes(x=get(noise[1]), y=get(noise[3]))) + geom_point(alpha=0.3) + geom_smooth() + 
+    plot2 <- m %>% ggplot(aes(x=get(noise[1]), y=get(noise[3]))) + geom_point(alpha=0.3) 
         theme_bw() + xlab('Number of UMIs - ATAC') + ylab('Number of Genes - ATAC')
     
 

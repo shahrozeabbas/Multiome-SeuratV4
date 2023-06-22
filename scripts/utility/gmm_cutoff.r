@@ -1,6 +1,4 @@
 
-require(rootSolve)
-
 NormalMixCutoff <- function(mix, lower=0, upper=1) {
 
   f <- function(x, m1, sd1, m2, sd2, p1, p2) {
