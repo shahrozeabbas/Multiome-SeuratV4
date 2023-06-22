@@ -1,5 +1,5 @@
 
-working_dir <- '/data/ShernData/CS032989_Taylor_Kondo/'; setwd(working_dir)
+working_dir <- '/data/CARD_singlecell/multiome-test/'; setwd(working_dir)
 
 source('scripts/main/load_packages.r')
 
@@ -19,10 +19,10 @@ markers <- object %>% FindAllMarkers(assay='RNA', min.pct=0.25, features=clean.g
 fwrite(x=markers, file=snakemake@output[['markers']])
 
 
-groups <- c('wnn_clusters', 'laneID', 'condition', 'timepoint')
-titles <- c('Clusters', 'Specimens', 'Condition', 'Timepoint')
+groups <- c('wnn_clusters', 'sample', 'batch')
+titles <- c('Clusters', 'Sample', 'Batch')
 
-plot.list <- lapply(seq(4), function(counter) {
+plot.list <- lapply(seq_along(groups), function(counter) {
     object %>% 
         DimPlot(group.by=groups[counter], label=TRUE, repel=TRUE, reduction='wnn.umap') + 
             ggtitle(titles[counter]) + xlab('') + ylab('') + NoLegend()
